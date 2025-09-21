@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Nominas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <h1 class="mb-4">Sistema de Nómina</h1>
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h5>Total Empleados</h5>
+                <h3>{{ empleados }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h5>Última Nómina</h5>
+                {% if ultima_nomina %}
+                    <h3>{{ ultima_nomina.aniomes }}</h3>
+                {% else %}
+                    <p>No hay nóminas</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow p-3 mb-4">
+                <h5>Total Neto Pagado</h5>
+                {% if ultima_nomina %}
+                    <h3>{{ ultima_nomina.neto }}</h3>
+                {% else %}
+                    <p>0.00</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if detalles %}
+    <h2 class="mt-4">Detalles de Última Nómina</h2>
+    <table class="table table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>Empleado</th>
+                <th>Sueldo</th>
+                <th>Bono</th>
+                <th>IESS</th>
+                <th>Préstamo</th>
+                <th>Neto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in detalles %}
+            <tr>
+                <td>{{ d.empleado.nombre }}</td>
+                <td>{{ d.sueldo }}</td>
+                <td>{{ d.bono }}</td>
+                <td>{{ d.iess }}</td>
+                <td>{{ d.prestamo }}</td>
+                <td>{{ d.neto }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'lista_empleados' %}" class="btn btn-primary">Gestionar Empleados</a>
+        <a href="{% url 'lista_nominas' %}" class="btn btn-secondary">Gestionar Nóminas</a>
+    </div>
+</body>
+</html>
