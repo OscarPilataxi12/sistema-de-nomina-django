@@ -1,7 +1,9 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
+from django.contrib.auth.models import User
 
 class Empleado(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     cedula = models.CharField(max_length=10, unique=True)
     nombre = models.CharField(max_length=100)
     sueldo = models.DecimalField(max_digits=10, decimal_places=2)
@@ -13,13 +15,14 @@ class Empleado(models.Model):
 
 
 class Nomina(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE) 
     aniomes = models.CharField(max_length=6)  # formato: 202401
     tot_ing = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     tot_des = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     neto = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return f"Nómina {self.aniomes}"
+         return f"Nómina {self.aniomes[:4]}/{self.aniomes[4:]}"
 
 
 class NominaDetalle(models.Model):

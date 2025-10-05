@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #007bff, #6f42c1);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+        .card {
+            width: 400px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 350px;">
+        <h3 class="text-center mb-4">Sistema de Nómina</h3>
+        {% if form.errors %}
+            <div class="alert alert-danger">Usuario o contraseña incorrectos.</div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="text" name="username" id="username" class="form-control" required autofocus>
+            </div>
+            
+            <div class="mb-3 position-relative">
+    <label for="password" class="form-label">Contraseña</label>
+    <input type="password" name="password" id="password" class="form-control" required>
+    <button type="button" id="togglePassword" class="btn btn-sm btn-outline-secondary position-absolute" 
+            style="right: 10px; top: 36px;">
+        👁️
+    </button>
+</div>
+
+<script>
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.textContent = '🙈';
+    } else {
+        passwordInput.type = 'password';
+        this.textContent = '👁️';
+    }
+});
+</script>
+
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+            <div class="text-center mt-3">
+    <a href="{% url 'signup' %}" class="text-decoration-none">¿No tienes cuenta? Regístrate aquí</a>
+    </div>
+        </form>
+    </div>
+</body>
+</html>
