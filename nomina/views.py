@@ -137,12 +137,12 @@ def dashboard(request):
         'ultima_nomina': ultima_nomina,
         'detalles': detalles,
     })
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-             # inicia sesión automáticamente después de registrarse
             return redirect('dashboard')
     else:
         form = UserCreationForm()
